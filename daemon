@@ -1,0 +1,28 @@
+#!/bin/sh
+if [ $# -eq 0 ];then
+	echo "usage: ./net2io n server.py "
+	exit
+fi
+
+if [ ! -f $1 || -f $3 ];then
+	echo "$1 not exsit or $3 not exsit"
+	exit
+fi
+
+sudo ./$1 $2 &
+python3.4 $3 &
+
+while true ; do
+    count=`ps -ef | grep $1| grep -v "grep" |grep -v "daemon" |wc -l`
+	servercount = `ps -ef | grep $3| grep -v "grep" |grep -v "daemon" |wc -l`
+	if [ $count -eq 0 ]; then
+		sleep 15
+		sudo reboot
+    fi
+	
+	if[ $servercount -eq 0 ]; then
+		python3.4 $3 &
+	fi
+	
+    sleep 3
+done

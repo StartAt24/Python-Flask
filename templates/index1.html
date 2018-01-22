@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Flask upload with Dropzone example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropzone.css') }}" type="text/css" />
+    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='dropzone.js') }}"></script>
+</head>
+
+<body>
+
+<div id="myId" class="dropzone" style="width: 500px; height: 300px;"></div>
+
+
+<div id="aaa"></div>
+<div id="preview-template" style="display: none;">
+    <div class="dz-preview  dz-file-preview ">
+        <div class="dz-image"><img data-dz-thumbnail /></div>
+        <div class="dz-details">
+            <div class="dz-filename"><span data-dz-name></span></div>
+            <div class="dz-size" data-dz-size></div>
+        </div>
+        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-success-mark"><span>✔</span></div>
+        <div class="dz-error-mark"><span>✘</span></div>
+        <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    </div>
+</div>
+
+     <script type="text/javascript">
+     
+        Dropzone.autoDiscover = false;//解决两次实例Dropzone错误，可在控制台看到该错误
+        $("#myId").dropzone({ 
+        url: "{{ url_for('upload_file') }}",
+        addRemoveLinks: true,        
+        method: 'post',
+        filesizeBase: 1024,
+        previewTemplate: $('#preview-template').html(),//如果去掉该选项就会使用默认的
+        autoQueue: true,
+        init: function() {
+                this.on("addedfile", function(file) {
+                    $(".start").click (function() { 
+                    this.enqueueFile(file);        
+                    })       
+                });
+            }
+        });  
+    
+     </script>
+     
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>IO_BOX</title>	
+		<link href="/static/basic.css" rel="stylesheet" type="text/css" />
+        <link href="/static/dropzone.css" rel="stylesheet" type="text/css"/>
+		<script src="/static/jquery-3.min.js"></script>
+        <script src="/static/socket.io.min.js"></script>
+        <script src="/static/dropzone.js"></script>
+        <!--<script src="/static/jquery.input-ip-address-control-1.0.min.js"></script>-->
+        <link rel="stylesheet" href="../static/basic.css">
+    </head>
+    <body>
+    <div id="header"><h1 id="keda">KEDACOM</h1><h1 id="box">IO_BOX</h1></div>
+        <div id="body">
+            <div id="leftPart">
+                <!--网络配置部分-->
+                <div class="input-group" style="margin-top: 50px">
+                    <h3>网络配置</h3><img src="/static/net.png">
+                </div>
+                <div class="input-group">
+                    <label>IO_BOX IP</label><input type="text" name="ip" maxlength="15" class="ipv4" id="IO_address" />
+                </div>
+                <div class="input-group">
+                    <label>子网掩码</label><input type="text" name="ip" maxlength="15" class="ipv4" id="IO_mask" />
+                </div>
+                <div class="input-group">
+                    <label>网关</label><input type="text" name="ip" maxlength="15" class="ipv4" id="IO_gateway" />
+                </div>
+                <div class="input-group">
+                    <button id="ipconfigBtn">修改网络配置</button>
+                </div>
+
+                <!--校时部分-->
+                <div class="input-group">
+                    <h3>校时</h3><img src="/static/time.png">
+                </div>
+                <div class="input-group">
+                    <label>当前时间</label><input type="text" id="time"/>
+                </div>
+                <div class="input-group">
+                    <button id="proof_time">校时</button>
+                </div>
+
+                <!--信号控制-->
+                <div class="input-group">
+                    <h3>接入信号机</h3><img src="/static/config.png">
+                </div>
+                <div class="input-group">
+                    <label>使能</label><input type="checkbox" id="signal_enable" />
+                </div>
+                <div class="input-group">
+                    <label>信号机IP</label><input type="text" name="ip" maxlength="15" class="ipv4" id="signal_ip" />
+                </div>
+                <div class="input-group">
+                    <label>端口</label><input type="text" id="signal_port" onKeyUp="value=value.replace(/[^\d]/g,'')"  />
+                </div>
+                <div class="input-group">
+                    <label>协议类型</label>
+                    <select id="signal_protol">                        
+                        <option value="2">骏马</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <button id="signal_btn">信号机确认</button>
+                </div>
+
+
+                <!--文件上传-->
+                <div class="input-group">
+                    <h3>系统升级</h3><img src="/static/file.png">
+                </div>
+
+                <!--用dropzone.js实现的上传功能-->
+                <div class="input-group">
+                    <div id="myId" class="dropzone" style="width: 200px; height: 200px;"></div>
+                    <div id="aaa"></div>
+                    <div id="preview-template" style="display: none;">
+                    <div class="dz-preview  dz-file-preview ">
+                        <div class="dz-image"><img data-dz-thumbnail /></div>
+                        <div class="dz-details">
+                            <div class="dz-filename"><span data-dz-name></span></div>
+                            <div class="dz-size" data-dz-size></div>
+                        </div>
+                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                        <div class="dz-success-mark" ><span></span></div>
+                        <div class="dz-error-mark"><span></span></div>
+                        <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <hr id="splitLine"/>
+            <div id="rightPart">
+                <!--过车记录实时显示-->
+                <div class="input-group" style="margin-top: 50px">
+                    <h3>实时过车信号</h3><img src="/static/car.png">
+                </div>
+                <div class="input-group">
+                    <ul id="realTimeRecord">
+                        <li><strong>车道号</strong><button id="cleanRecord">清空记录</button><label style="width:150px;">过车总数:0</label></li>
+                        <li>车道1<div class="carRecord"></div><label>0</label></li>
+                        <li>车道2<div class="carRecord"></div><label>0</label></li>
+                        <li>车道3<div class="carRecord"></div><label>0</label></li>
+                        <li>车道4<div class="carRecord"></div><label>0</label></li>
+                        <li>车道5<div class="carRecord"></div><label>0</label></li>
+                        <li>车道6<div class="carRecord"></div><label>0</label></li>
+                        <li>车道7<div class="carRecord"></div><label>0</label></li>
+                        <li>车道8<div class="carRecord"></div><label>0</label></li>
+                        <li>车道9<div class="carRecord"></div><label>0</label></li>
+                        <li>车道10<div class="carRecord"></div><label>0</label></li>
+                        <li>车道11<div class="carRecord"></div><label>0</label></li>
+                        <li>车道12<div class="carRecord"></div><label>0</label></li>
+                        <li>车道13<div class="carRecord"></div><label>0</label></li>
+                        <li>车道14<div class="carRecord"></div><label>0</label></li>
+                        <li>车道15<div class="carRecord"></div><label>0</label></li>
+                        <li>车道16<div class="carRecord"></div><label>0</label></li>
+                        <li>车道17<div class="carRecord"></div><label>0</label></li>
+                        <li>车道18<div class="carRecord"></div><label>0</label></li>
+                        <li>车道19<div class="carRecord"></div><label>0</label></li>
+                        <li>车道20<div class="carRecord"></div><label>0</label></li>
+                        <li>车道21<div class="carRecord"></div><label>0</label></li>
+                        <li>车道22<div class="carRecord"></div><label>0</label></li>
+                        <li>车道23<div class="carRecord"></div><label>0</label></li>
+                        <li>车道24<div class="carRecord"></div><label>0</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		  <!--重启cover界面-->
+		<div id="coverDiv">
+			<div id="changeLog">
+				<div id="changeContent">
+					<h3>设备正在重启,请稍等!</h3>
+					<img src="/static/wait.gif"/>
+				</div>
+			</div>
+		</div>
+        <script>
+            //获取服务器的url 存储在变量SCRIPT_ROOT中
+			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+			/*
+			//POST方式发送请求
+			$(document).ready(function() {
+                //提交一个异步的post
+                $("#btn").click(function () {
+                    alert("clicked!");
+
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=UTF-8",
+                        url: $SCRIPT_ROOT,
+
+                        //dataType是希望服务器返回的数据
+                        dataType: "json",
+
+                        //JSON默认用双引号表示字符串
+                        data: JSON.stringify({
+                            'ip': $("#ip").val(),
+                            'cover': $("#cover").val(),
+                            'gate': $("#gate").val(),
+                        }),
+                        success: function (data) {
+                            alert("发送成功！")
+                            if (data.state) {
+                                alert("接收到了返回信息");
+                            }
+                            else {
+                                alert("未接收到消息");
+                            }
+                        },
+                        error: function (xhr, err) {
+                            alert("请求失败，原因可能是:" + err + "!");
+                        }
+                    });
+                });
+
+                //上传文件
+
+                //轮训查询数据
+                //setInterval("$('#btn').click()", 2000);
+                function askServer() {
+					alert("askServer!");
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=UTF-8",
+                        url: $SCRIPT_ROOT+"/answer",
+
+                        //dataType是希望服务器返回的数据
+                        dataType: "json",
+                        //JSON默认用双引号表示字符串
+                        data: JSON.stringify({
+                            'signal': 'update'
+                        }),
+                        success: function (data) {
+							alert("tag:"+data[0] + ",value:"+data[1]);
+                        },
+                        error: function (xhr, err) {
+                            alert("请求失败，原因可能是:" + err + "!");
+                        }
+                    });
+                }
+
+                //setInterval(function(){askServer();}, 4000);
+				setInterval(askServer, 4000);
+            });
+            */			
+            $(document).ready(function(){               
+				if(typeof(WebSocket)!= "function")
+				{
+					alert("当前浏览器不支持websocket,请您使用Chrome或者其他较新的浏览器");
+				}
+				setInterval(showCurTime, 1000);
+            });
+
+            /*信号发送部分*/
+
+            //$("input.ipv4").ipAddress();
+            //判断ip地址的合法性
+            function checkIP(value){
+                var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+                var reg = value.match(exp);
+                if(reg==null)
+                {
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+
+            //判断子网掩码
+            function checkMask(mask){
+              var obj=mask;
+              var exp=/^(254|252|248|240|224|192|128|0)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(254|252|248|240|224|192|128|0)$/;
+              var reg = obj.match(exp);
+              if(reg==null){
+                return false; //"非法"
+              }
+              else{
+                return true; //"合法"
+              }
+            }
+
+            //修改IP.
+			 $("#ipconfigBtn").click(function () {
+
+			     if(!checkIP($("#IO_address").val()))
+                 {
+                     console.log($("#IO_address").val());
+                     alert("ip地址格式错误！");
+                     return;
+                 }
+                 if(!checkMask($("#IO_mask").val()))
+                 {
+                     alert("子网掩码地址格式错误！");
+                     return;
+                 }
+                 if(!checkIP($("#IO_gateway").val()))
+                 {
+                     alert("网关地址格式错误！");
+                     return;
+                 }
+
+			        if(window.confirm("修改IP需要重启设备"))
+                    {
+                         socket.emit('change_ip', JSON.stringify({
+                            'IO_address': $("#IO_address").val(),
+                            'IO_mask': $("#IO_mask").val(),
+                            'IO_gateway': $("#IO_gateway").val()
+                         }));
+                    }
+                });
+
+            //校时
+            $("#proof_time").click(function(){
+                var date = new Date();
+                var timeSec = date.getTime();
+                socket.emit('proof_time', JSON.stringify({
+                    'sysTime': timeSec
+                }));
+            });
+
+            //接入信号机
+            $("#signal_btn").click(function(){
+                if(!checkIP($("#signal_ip").val()))
+                {
+                    alert("信号机IP不合法！");
+                    return;
+                }
+               socket.emit('signal_control', JSON.stringify({
+                   'signal_enable': $("#signal_enable").is(':checked'),
+                   'signal_ip': $("#signal_ip").val(),
+                   'signal_port': $('#signal_port').val(),
+                   'signal_protol':$("#signal_protol").val()
+               }))
+            });
+
+			var file = null; //文件对象
+			 var socket = io.connect($SCRIPT_ROOT); //websocket对象
+                socket.on('connect',function()
+                    {
+                       socket.emit('connected');
+                    });
+                 socket.on('response', function(msg)
+                  {
+                      console.log(msg);
+                      console.log(typeof(msg));
+                      var jdata = JSON.parse(msg);
+                      console.log("JSON.parse:" + jdata.name);
+                  });
+
+              Dropzone.autoDiscover = false;//解决两次实例Dropzone错误，可在控制台看到该错误
+                $("#myId").dropzone({
+                url: "{{ url_for('upload_file') }}",
+                addRemoveLinks: true,
+                method: 'post',
+                filesizeBase: 1024,
+                previewTemplate: $('#preview-template').html(),//如果去掉该选项就会使用默认的
+                autoQueue: true,
+                maxFiles: 1,
+                acceptedFiles: ".pkg",
+                    dictDefaultMessage: "选择需要的升级包",
+                    dictCancelUpload:"取消上传",
+                    dictCancelUploadConfirmation:"确定取消上传吗？",
+                    dictRemoveFile:"移除文件",
+                init: function() {
+                    this.on("success", function()
+                    {
+                        socket.emit('update');
+                    });
+                    }
+                });
+                //接收到重启的信息,轮训新的ip地址
+                var askHandle;
+                socket.on("need_Reboot", function(msg){
+                    $("#coverDiv").css("visibility","visible");
+                    socket.emit("reboot_ack");
+                    //轮训新的地址.
+                    intervalAsk(JSON.parse(msg).ip[0]);
+                    //如果超过五分钟的话,提示可能出错。
+                    setTimeout(function(){
+                        clearInterval(askHandle);
+                         $("#coverDiv").css("visibility","hidden");
+                         alert("重启超时！请查看是否出错！")
+                    }, 5*60*1000);
+                });
+
+
+                /*服务器消息处理部分*/
+                //校时
+                socket.on("proof_time_ack",function(msg){
+                    if(JSON.parse(msg.result) == "success")
+                    {
+                        alert("校时成功!");
+                    }else{
+                        alert("校时失败!");
+                    }
+                });
+
+                //信号机数据设置
+                socket.on("signal_control_set_ack", function(msg){
+                    if(JSON.parse(msg.result) == "success")
+                    {
+                        alert("信号机数据设置成功!");
+                    }else{
+                        alert("信号机数据设置失败！");
+                    }
+                });
+
+                //信号机配置获取
+                socket.on('signal_config', function(msg){
+                   var data = JSON.parse(msg);
+				   console.log(data);
+				   if(data.signal_enable == true)
+				   {
+						 $("#signal_enable").attr("checked", "true");
+				   }else{
+						$("#signal_enable").attr("checked", "false");
+				   }
+                  
+                   $("#signal_ip").val(data.signal_ip);
+                   $("#signal_port").val(data.signal_port);
+                    $("#signal_protol").val(data.signal_protol);
+                });
+
+                //实时显示ip消息
+                socket.on('showIP', function(msg){
+                    var data = JSON.parse(msg);
+                    $("#IO_address").val(data.IO_address);
+                    $("#IO_mask").val(data.IO_mask);
+                    $("#IO_gateway").val(data.IO_gateway);
+                });
+
+
+                //实时过车信息显示
+                socket.on('real_time_record', function(msg){
+                    var data = JSON.parse(msg);
+                    //设置对应的div参数
+                    if(data.enable == 1)
+                    {
+                        $("#realTimeRecord li").eq(data.roadId).children("div").css("background-color","green");
+                        var count = $("#realTimeRecord li").eq(data.roadId+1).children("label").text();
+                        count = Number(count);
+                        count+=1;
+                        $("#realTimeRecord li").eq(data.roadId).children("label").text(count);
+
+                        var totalnum = $("#realTimeRecord li").eq(0).children("label").text();
+                        totalnum = Number(totalnum.slice(5));
+                        totalnum += 1;
+                        $("#realTimeRecord li").eq(0).children("label").text("过车总数:"+totalnum.toString());
+                    }
+                    if(data.enable == 0)
+                    {
+                        $("#realTimeRecord li").eq(data.roadId).children("div").css("background-color","lightgrey");
+                    }
+                });
+
+
+                //清空所有过车显示
+                $("#cleanRecord").click(function(){
+                    $("#realTimeRecord li").children("div").css("background-color","lightgrey");
+                    $("#realTimeRecord li").children("label").text(0);
+                    $("#realTimeRecord li").children("label").eq(0).text("过车总数:0");
+                });
+
+                function intervalAsk(newIP)
+                {
+                    askHandle = setInterval(askNewAddr, 1000, newIP);
+                }
+
+                //轮训新的地址,如果收到GET请求则 直接跳转到新的地址
+                function askNewAddr(newIP)
+                {
+                    //ajax的方式发送GET请求
+                    console.log("ask new Addr");
+                    var newUrl = "http://" + newIP;
+                    $.ajax({
+                        url: newUrl,
+                        method: 'GET',
+                        dataType:"html",
+                        success: function(data){
+                            console.log("jump to another web");
+                            //window.location = "http://" + newIP;
+                            $(location).attr('href', newUrl);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown)
+                        {
+                            console.log("Failed to jump to new IP");
+                            console.log(XMLHttpRequest.status);
+                            console.log(XMLHttpRequest.readyState);
+                            console.log(textStatus);
+                        }
+                    })
+                }
+
+                function editTime(s)
+                {
+                    return s<10? '0'+s : s;
+                }
+                function showCurTime()
+                {
+                    var myDate = new Date();
+                    var year = myDate.getFullYear();
+                    var month = myDate.getMonth() + 1;
+                    var date = myDate.getDate();
+                    var h = myDate.getHours();
+                    var m = myDate.getMinutes();
+                    var s = myDate.getSeconds();
+                    var now = year+'-'+editTime(month)+'-'+editTime(date)+' '+editTime(h)+':'+editTime(m)+':'+editTime(s);
+                    $("#time").val(now);
+                }
+
+        </script>
+    </body>
+</html>

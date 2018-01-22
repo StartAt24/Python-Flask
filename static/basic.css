@@ -1,0 +1,227 @@
+body{
+    padding:0;
+    margin:0;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+div#header{
+    width:100%;
+    height:50px;
+    background-color: #276ecb;
+    text-align:center;
+    font-family: Tahoma;
+    top:0;
+    left:0;
+    padding-top: 3px;
+    position:fixed;
+    transition: top 200ms ease-in-out;
+}
+
+div#header h1{
+    color: white;
+    display: inline;
+}
+
+div#header h1#keda{
+    float:left;
+    margin-top: 0;
+    margin-left: 5px;
+    background-color: white;
+    color:#276ecb;
+}
+
+div#header h1#box{
+    margin-left: -160px;
+}
+
+div#body{
+    margin:0 auto;
+    padding:0 16px;
+    width:100%;
+    /*max-width: 600px;*/
+}
+
+div.part-title img{
+}
+
+div.part-title h3{
+    float:left;
+}
+
+
+div.input-group{
+    font-family: Tahoma;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    margin-bottom: 0px;
+    margin-top:5px;
+    min-width: 360px;
+}
+
+div.input-group label{
+    font-family: 微软雅黑;
+    /*min-width: 200px;*/
+}
+
+div.input-group input{
+    width:100%;
+    max-width: 200px;
+    margin-left: 32px;
+    border-top:0px;
+    border-left:0px;
+    border-right:0px;
+    border-bottom: 1px solid #d1d5d9;
+
+}
+
+button#ipconfigBtn, #proof_time, #signal_btn{
+    width:100px;
+    height:30px;
+    border-radius: 3px;
+    border:1px solid grey;
+    margin: 0 auto;
+    cursor:pointer;
+}
+
+button#ipconfigBtn:hover, #proof_time:hover, #signal_btn:hover{
+    background-color: lightgrey;
+}
+
+div#myId{
+    margin: 0 auto;
+}
+
+div.input-group input[type="checkbox"] {
+    cursor:pointer;
+    border-radius: 5px;
+}
+
+div.input-group select{
+    width:80px;
+    cursor:pointer;
+    margin-right: 10%;
+}
+
+div.input-group input[type="checkbox"]:focus,div.input-group input:focus {
+    border-bottom: 1px solid black;
+}
+
+
+/*重启覆盖界面 效果*/
+#coverDiv{
+    position:absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height:100%;
+    background:rgba(52,52,52,0.3);
+    visibility: hidden;
+}
+#changeLog{
+    margin:300px auto;
+    width:230px;
+    height:90px;
+    background-color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    align-items:center;
+}
+
+div#changeContent{
+    padding-top: 10px;
+}
+
+div#changeContent h3, img{
+    float:left;
+}
+div#changeContent img{
+    margin-top: 24px;
+    margin-left: 20px;
+}
+
+#curTime{
+    background-color: white;
+    margin: 3px 3px;
+}
+#timeBtn{
+    cursor:pointer;
+}
+
+/*左右分栏效果*/
+#leftPart, #rightPart
+{
+    width: 50%;
+    padding: 0 3%;
+    float:left;
+    min-width: 365px;
+}
+
+hr#splitLine{
+    float:left;
+    width:1px;
+    height:96%;
+    margin: 0 2%;
+    color:darkgreen;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #fefefe;
+}
+
+/*实时过车部分样式*/
+ul#realTimeRecord
+{
+    list-style: none;
+    margin-left: 10px;
+    margin-top: 0;
+    padding:0;
+    width:100%;
+}
+
+ul#realTimeRecord li{
+  margin-top: 8px;
+    border-bottom: 1px dashed lightgrey;
+    line-height: 20px;
+    width:100%;
+}
+
+
+label#carNum{
+    width:80px;
+    height:20px;
+    float:right;
+    display:block;
+}
+
+div.carRecord
+{
+    display: inline-block;
+    float:right;
+    width:60px;
+    height:20px;
+    background-color: lightgrey;
+    border-radius:3px;
+}
+button#cleanRecord{
+    float:right;
+    width:80px;
+    height:20px;
+    border-radius: 3px;
+    border:1px solid grey;
+    margin: 0 auto;
+    cursor:pointer;
+}
+button#cleanRecord:hover{
+    background-color: lightgrey;
+}
+
+ul#realTimeRecord li label{
+    width:80px;
+    float:right;
+    margin-right: 10px;
+}
+
