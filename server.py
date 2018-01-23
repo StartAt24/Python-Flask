@@ -303,7 +303,8 @@ def recvThread():
 		if recvMsg(byref(msgNum), content) == 0:
 			print("SERVER_from_IO : the content type is %s, the content number is %d, the content is:%s" % (type(content.value), msgNum.value, content.value))
 			if(msgNum.value == MSG_REAL_TIME_RECORD):
-				msgType_to_functions(msgNum.value, content.value)
+				#create_string_buffer的value属性是将它当成一个\0结尾的字符串获取值，raw属性是当成字节流
+				msgType_to_functions(msgNum.value, content.raw)
 			else:
 				msgType_to_functions(msgNum.value, str(content.value, encoding='utf-8'))
 		else:
