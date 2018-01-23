@@ -5,6 +5,9 @@
 
 列表中的daemon脚本是一个守护进程，可以开机的时候启动下，这样不管是C++程序(脚本中的net2io) 还是web_server，在进程退出的时候都会进行重启。
 
-关于C++部分的实现简单的附加了一个例子，中间涉及到了json解析的部分及数据发送回web的部分，可以参考下。
+关于C++部分的实现简单的附加了一个例子(在c_plus_plus文件夹下)，中间涉及到了json解析的部分及数据发送回web的部分，可以参考下。
+其中的DjjMsgQue.cpp和DjjMsgQue.h即消息队列的封装.
+io.cpp和realTimeTest.cpp都是简单的解析及返回数据。
+编译指令:g++ -o io io.cpp -I ./include -I . 
 
 
