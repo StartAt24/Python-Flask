@@ -10,4 +10,6 @@
 io.cpp和realTimeTest.cpp都是简单的解析及返回数据。
 编译指令:g++ -o io io.cpp -I ./include -I . 
 
+运行环境是python3.4，联网条件下可以直接 pip3 install flask及 flask-socketio, flask-uploads
+生产环境下，可以再install_sourcefile目录下执行 sudo python3.4 checkModule.py,自动安装整个项目依赖的模块。一共是14个模块，如果安装之后运行不了，可能是有的模块没有安装好，可以再次执行下sudo python3.4 checkModule.py。成功的话会提示 have enough modules? True.
 
